@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/97d72542-2464-493f-b0dc-5e7af5105a4c/resourceGroups/appsvc_linux_centralus_basic/providers/Microsoft.Web/sites/flipkart-clone-nextjs",
+    "appService.deploySubpath": "."
+}

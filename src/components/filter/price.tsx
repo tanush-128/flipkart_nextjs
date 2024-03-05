@@ -43,7 +43,7 @@ export const PriceFilter = () => {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState("");
   return (
-    <div className="mx-2 border-b border-b-slate-600/15 pb-2">
+    <div className=" mx-2 border-b border-b-slate-600/15 pb-2 ">
       <div className="font-medium">PRICE</div>
       <Slider defaultValue={[33]} max={100} step={1} className="mt-4 h-1" />
       <div className="mt-4 flex justify-between">

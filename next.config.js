@@ -6,6 +6,9 @@ await import("./src/env.js");
 
 /** @type {import("next").NextConfig} */
 const config = {
+  reactStrictMode: true,
+  swcMinify: true,
+  output: "standalone",
   images: {
     remotePatterns: [
       {
@@ -19,6 +22,14 @@ const config = {
       {
         protocol: "https",
         hostname: "static-assets-web.flixcart.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.om",
       },
     ],
   },

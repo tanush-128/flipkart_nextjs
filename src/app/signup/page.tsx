@@ -4,7 +4,6 @@ import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import CreateUser from "~/actions/actions";
 
 const LoginPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -44,7 +43,14 @@ const LoginPage = () => {
             <span className="text-blue-600"> Privacy Policy.</span>
           </div>
           <button
-            onClick={() => signIn("email", { email: inputRef.current?.value })}
+            onClick={async () => {
+              try {
+                await signIn("email", { email: inputRef.current?.value });
+              } catch (e) {
+                console.log(e);
+              }
+              // await signIn("email", { email: inputRef.current?.value });
+            }}
             className="mt-4 w-full rounded bg-orange-500 py-2 font-medium text-white shadow-md"
           >
             CONTINUE

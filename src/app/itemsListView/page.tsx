@@ -1,14 +1,23 @@
 "use client";
 import { Product } from "@prisma/client";
+import { get } from "http";
+import React from "react";
+import { useEffect } from "react";
+import { GetProducts } from "~/actions/actions";
 import { ProductBriefView } from "~/components/ProductBriefView";
 import { CustomerRatingsFilter } from "~/components/filter/customerRatings";
 import { PriceFilter } from "~/components/filter/price";
 
 const Page = () => {
-  const Products = [product, product, product, product, product, product]
+  const [Products, setProducts] = React.useState<Product[]>([]);
+  useEffect(() => {
+    void GetProducts().then((products) => setProducts(products));
+    // setProducts([product, product, product, product, product, product]);
+  }, []);
+
   return (
-    <div className="flex gap-10 px-16 py-2">
-      <div className="w-60 bg-white">
+    <div className="flex gap-10 py-2 lg:px-16">
+      <div className="hidden w-60 bg-white">
         <div className="flex justify-between p-2">
           <span className="font-medium">FILTERS</span>
           <span className="font-medium text-blue-600 hover:underline">
@@ -21,8 +30,7 @@ const Page = () => {
       <div className="w-full bg-white">
         {Products.map((product, index) => (
           <ProductBriefView product={product} key={index} />
-        ))
-      }
+        ))}
       </div>
     </div>
   );

@@ -30,9 +30,9 @@ export const CreateProduct = async (data: FormData) => {
 
   console.log(product);
 
-  // return db.product.create({
-  //   data: product,
-  // });
+  return db.product.create({
+    data: product,
+  });
 };
 
 const myHeaders = new Headers();
@@ -46,7 +46,7 @@ export const UploadImages = async (images: File[]) => {
     await Upload(image);
   }
 
-  async function Upload(image: File) {
+async function Upload(image: File) {
     const formdata = new FormData();
     formdata.append("file", image, "[PROXY]");
     formdata.append("upload_preset", "wk8rrmkj");
@@ -72,3 +72,100 @@ export const UploadImages = async (images: File[]) => {
 
   return ImageUrls;
 };
+
+
+export const GetProducts = async () => {
+  return db.product.findMany();
+
+};
+
+export const GetProduct = async (slug: string) => {
+  const product = await db.product.findUnique({
+    where: {
+      slug,
+    },
+    
+  });
+  if (product === null) throw new Error("Product not found");
+
+    return product;
+};
+
+export const GetProductReviews = async (slug: string) => {
+  return db.review.findMany({
+    where: {
+      product: {
+        slug,
+      
+      },
+      
+    },
+    include: {
+      user: {
+        select: {
+        email: true,
+       
+        },
+      
+      }
+    }
+  },
+  );
+}
+export const AddProductReview = async (slug: string, review: string, rating: number,userId: string) => {
+  return db.review.create({
+    data: {
+      rating,
+      title: "title",
+      comment: review,
+      user: {
+        connect: {
+          id: userId,
+        },
+      },
+      product: {
+        connect: {
+          slug,
+        },
+      },
+    },
+  });
+};
+export const AddItemToCart = async (userId: string, productId: string) => {
+  await db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      cartProductIds: {
+        push: productId,
+      
+      },
+    },
+  });
+}
+
+export const RemoveItemFromCart = async (userId: string, productId: string) => {
+  await db.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      cartProductIds: {
+        set: [...(await db.user.findUnique({ where: { id: userId } }))!.cartProductIds.filter((id) => id !== productId)]
+      },
+    },
+  });
+}
+
+export const GetCartItems = async (userId: string) => {
+ 
+  return db.product.findMany({
+    where: {
+      id: {
+        in: (await db.user.findUnique({ where: { id: userId } }))!.cartProductIds,
+      },
+    },
+  });
+}
+

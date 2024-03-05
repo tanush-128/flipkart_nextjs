@@ -1,4 +1,3 @@
-
 import Link from "next/link";
 import { ItemsList } from "~/components/ItemsLsit";
 import { MaxWidthWrapper } from "~/components/MaxWidthWrapper";
@@ -13,4 +12,3 @@ export default function HomePage() {
     </MaxWidthWrapper>
   );
 }
-

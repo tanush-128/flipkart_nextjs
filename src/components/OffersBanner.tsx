@@ -10,7 +10,7 @@ import {
 
 export const OffersBanner = () => {
   return (
-    <Carousel className="z-0 mt-8">
+    <Carousel className=" mt-8">
       <CarouselContent>
         <CarouselItem>
           <Image
